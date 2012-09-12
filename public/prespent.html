@@ -1,0 +1,203 @@
+<!doctype html>  
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>The Changing WWW</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		
+		<link rel="stylesheet" href="/css/reveal.css">
+		<link rel="stylesheet" href="/css/theme/default.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="/lib/css/zenburn.css">
+	</head>
+	
+	<body>
+		
+		<div class="reveal">
+
+			<!-- Used to fade in a background when a specific slide state is reached -->
+			<div class="state-background"></div>
+			
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>The Changing WWW</h1>
+					<br />
+					<h3>How nerds are creating the new final frontier</h3>
+				</section>
+				
+				<section>
+					<section>
+						<h2>What we've seen</h2>
+						<img src="img/interworks_old.png" />
+						<p>Old Interworks website</p>
+					</section>
+					<section>
+						<h2>Current Day</h2>
+						<img src="img/interworks_new.png" />
+						<p>Current Interworks website</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>A look into the future!</h2>
+				</section>
+
+				<section>
+					<section>
+						<h2>CSS3 - Allow mobile & desktop</h2>
+						<img src="img/yahoo.png" />
+					</section>
+					<section>
+						<h2>CSS3 - Allow mobile & desktop</h2>
+						<img src="img/yahoo_mobile.png" />
+					</section>
+					<section>
+						<h2>CSS3 - Cool animations</h3>
+						<em class="button red large" style="margin-top:30px">CSS Button</em>
+
+						<h2 class="rotating-text" style="margin-top: 40px;">Rotating Text</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2><em>S</em>calable <em>V</em>ector <em>G</em>raphics</h2>
+						<div id="tiger-container"></div>
+					</section>
+					<section>
+						<h2>Scaled Images</h2>
+						<img src="img/tiger.png" />
+					</section>
+					<section>
+						<h2>Visualize Data</h2>
+						<img src="img/line_graph.png" />
+					</section>
+				</section>
+
+				<section>
+					<h2>WebGL & Canvas</h2>
+					<canvas id="webgl_canvas" width="500" height="500"></canvas> 
+<script id="shader-vs" type="x-shader/x-vertex"> 
+  attribute vec3 aPos;
+  attribute vec3 aNorm;
+  uniform mat4 mvMatrix;
+  uniform mat4 prMatrix;
+  varying vec4 color;
+  const vec4 dirDif = vec4(0., 0., 1., 0.);
+  const vec4 dirHalf = vec4(.4034, .259, .8776, 0.);
+void main(void) {
+   gl_Position = prMatrix * mvMatrix * vec4(aPos, 1.);
+   vec4 rotNorm = mvMatrix * vec4(aNorm, .0);
+   float i = abs(dot(rotNorm, dirDif));
+   color = vec4(.5*i+.2, .5*i+.2, .8*i+.2, 1.);
+   i = pow( abs(dot(rotNorm, dirHalf)) , 40.);
+   color += vec4(i, i, i, 0.);
+}
+</script> 
+ 
+<script id="shader-fs" type="x-shader/x-fragment"> 
+#ifdef GL_ES
+precision highp float;
+#endif
+  varying vec4 color;
+void main(void) {
+   gl_FragColor = color;
+}
+</script> 
+				</section>
+
+				<section>
+					<section>
+						<h2>Mobile & Desktop Apps</h2>
+
+						<p>One ring to rule them all</p>
+					</section>
+					<Section>
+						<h2>Mobile Apps</h2>
+						<img src="img/mobile-phones.jpg" />
+						<ul>
+							<li>Only have to make it once</li>
+						</ul>
+					</section>
+					<Section>
+						<h2>Desktop Apps</h2>
+						<img src="img/appjs.png" />
+						<ul>
+							<li>Only have to make it once</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section>
+					<h1>Concluding...</h1>
+					<br />
+					<h3>Mark Gardner @ InterWorks</h3>
+					<br />
+					<h3>Twitter: mgardner85</h3>
+					<br />
+					<h3>mark.gardner@interworks.com</h3>
+				</section>
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+			</aside>
+
+			<!-- Presentation progress bar -->
+			<div class="progress"><span></span></div>
+			
+		</div>
+
+		<canvas id="canvas" width="1000" height="1000" style="position: absolute; left: 50%; top: 0; margin-left: -500px;"></canvas>
+
+		<script src="/lib/js/head.min.js"></script>
+		<script src="/js/jquery.js"></script>
+		<script src="/js/reveal.js"></script>
+		<script src="/js/raphael.js"></script>
+		<script src="/js/tiger.js"></script>
+		<script src="CanvasMatrix.js"></script>
+
+		<script>
+			
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			window.present = Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/linear(2d)
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return true; } },
+					{ src: '/plugin/remote_present/client.js', async: true, condition: function() { return true; } },
+				]
+			});
+
+			$(document).on('ready', function() {
+				var paper = Raphael($('#tiger-container')[0], 1200, 1200);
+				window.tigerGroup = Raphael._g.doc.createElementNS("http://www.w3.org/2000/svg", 'g');
+				paper.canvas.appendChild(window.tigerGroup);
+				paper.canvas = window.tigerGroup;
+				paper.add(tiger);
+
+				window.tigerGroup.setAttribute('transform', 'translate(350, 200)');
+			});
+			
+		</script>
+
+	</body>
+</html>
